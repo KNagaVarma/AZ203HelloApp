@@ -7,7 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var appInsights=require('applicationinsights');
+var appInsights = require('applicationinsights');
 appInsights.setup('af50007e-4f8b-40e3-a6d7-255c76e36bd0');
 appInsights.start();
 
@@ -27,7 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/problem',function(){
-  throw new error('something went wrong');
+  throw new Error('something went wrong');
 });
 
 // catch 404 and forward to error handler
