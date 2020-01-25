@@ -26,13 +26,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.use('/problem',function(){
+  throw new error("something went wrong");
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-app.use('/problem',function(){
-  throw new error("some thing went wrong");
-});
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
