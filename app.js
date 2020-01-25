@@ -7,6 +7,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var appInsights=require('applicationinsights');
+appInsights.setup('af50007e-4f8b-40e3-a6d7-255c76e36bd0');
+appInsights.start();
+
 var app = express();
 
 // view engine setup
@@ -26,6 +30,9 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+app.use('/problem',function(){
+  throw new error("some thing went wrong");
+});
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -33,6 +40,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  appInsights.defaultClient.trackException({exception:err});
   // render the error page
   res.status(err.status || 500);
   res.render('error');
